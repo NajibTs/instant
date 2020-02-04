@@ -93,29 +93,15 @@ class User extends Authenticatable
      }
 
 
-    // public function users()
-    //  {
-    //      return $this->hasMany(User::class);
-    //  }
-
-
-    //  public function followers(){
-    //     return $this->belongsToMany(User::class , 'users_followed' , 'user_id' , 'followed_id');
-    //  }     
-     
-    //  public function follow($id){
-    //     //   return Auth::User()->followers()->syncWithoutDetaching($id);
-    //     return Auth::User()->followers()->toggle($id);
-    //  }
-    //  public function unfollow($id){
-    //     return Auth::User()->followers()->detach($id);
-    // }
-
-    // Public function isFollowing(){ 
-
-    //     return User::isRelationExists($this, 'users_followed', 'user_id' , 'followed_id');
-
-    // }
+     public function following() {
+        
+        return $this->belongsToMany('App\User', 'followables', 'user_id', 'followable_id');
+    }    
+    
+    public function followers() {
+        
+        return $this->belongsToMany('App\User', 'followables', 'followable_id', 'user_id');
+    }
 
     
 

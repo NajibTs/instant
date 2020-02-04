@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\User;
+use Auth;
 
 use Intervention\Image\Facades\Image;
 
@@ -19,8 +20,10 @@ class ProfilesController extends Controller
 
     public function index(\App\User $user)
     {   
+        $following = Auth::user()->following;
+        $followers = Auth::user()->followers;
         
-        return view('profiles.index', compact('user'));
+        return view('profiles.index', compact('user', 'following', 'followers'));
     }
 
     public function edit(\App\User $user){

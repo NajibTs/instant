@@ -56,7 +56,8 @@
 
                             @can('update', $user->profile)
                             
-                            <a class="btn btn-outline-default d-flex justify-content-center align-items-center" style="text-decoration: none; padding:20px; " href="/p/create">Add New Post</a>
+                            <a class="btn btn-outline-default d-flex justify-content-center align-items-center" style="text-decoration: none; padding:20px; " href="/p/create">Add New Post </a>
+                                
                                 
                             
                             
@@ -126,10 +127,69 @@
                                 <a  class="nav-item nav-link active text-dark" id="nav-home-tab" data-toggle="tab" href="#followers" role="tab" aria-controls="nav-home" aria-selected="true">Posts <span class="badge badge-primary">{{ $user->posts->count() }}</span></a>
         
 
-                                <a class="nav-item nav-link active text-dark" id="nav-home-tab" data-toggle="tab" href="#followers" role="tab" aria-controls="nav-home" aria-selected="true">Followers <span class="badge badge-primary">{{ $user->followers()->get()->count() }}</span></a>
+                                <a data-toggle="modal" data-target="#followersModal"  class="nav-item nav-link active text-dark" id="nav-home-tab" data-toggle="tab" href="#followers" role="tab" aria-controls="nav-home" aria-selected="true">Followers <span class="badge badge-primary">{{ $user->followers()->get()->count() }}</span></a>
         
-                                <a class="nav-item nav-link text-dark" id="nav-profile-tab" data-toggle="tab" href="#following" role="tab" aria-controls="nav-profile" aria-selected="false">Following <span class="badge badge-primary">{{ $user->followings()->get()->count() }}</span></a>
+                                {{-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa modal --}}
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="followersModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 style="padding-left: 43%"  class="modal-title" id="exampleModalLabel">Abonnés</h5>
+                                        <button  type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span style="font-size:20px" aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            @foreach ($followers as $followers)
+                                                <a href="/profile/{{$followers->id}}" class="text-decoration-none row mt-2 mb-2">
+                                                    <img style="height:40px; width:40px; border-radius:50%" src="{{$followers->profile->profileImage()}}" alt="">
+                                                    <div  class=" column mt-1">
+                                                        <div class="ml-2 text-dark">{{$followers->name}}</div>
+                                                        <div class="ml-2 text-dark">{{$followers->username}}</div>
+                                                    </div>
+                                                </a>
+                                            @endforeach
+                                        </div>
+                                        
+                                    </div>
+                                    </div>
+                                </div>
+
+                            {{-- bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb modal --}}
+
+                                <a data-toggle="modal" data-target="#followingModal" class="nav-item nav-link text-dark" id="nav-profile-tab" data-toggle="tab" href="#following" role="tab" aria-controls="nav-profile" aria-selected="false">Following <span class="badge badge-primary">{{ $user->followings()->get()->count() }}</span></a>
         
+                                {{-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa modal --}}
+
+                                <!-- Modal -->
+                                    <div class="modal fade" id="followingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h5 style="padding-left: 43%" class="modal-title" id="exampleModalLabel">Abonnements</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span style="font-size:20px" aria-hidden="true">&times;</span>
+                                            </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                    @foreach ($following as $following)
+                                                    <a href="/profile/{{$following->id}}" class="text-decoration-none row mt-2 mb-2">
+                                                        <img style="height:40px; width:40px; border-radius:50%" src="{{$following->profile->profileImage()}}" alt="">
+                                                        <div  class=" column mt-1">
+                                                            <div class="ml-2 text-dark">{{$following->name}}</div>
+                                                            <div class="ml-2 text-dark">{{$following->username}}</div>
+                                                        </div>
+                                                    </a>
+                                                    @endforeach
+                                            </div>
+                                            
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                {{-- bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb modal --}}
                                
                             
                             </div> 
@@ -140,6 +200,7 @@
                         <div style="margin-left:-2%" class="px profile-bio ">
             
                             <p><span class="profile-real-name">{{ $user->profile->title }}</span> {{$user->profile->description}}</p>
+                           
                             <hr>
                             <div><a href="#">{{$user->profile->url}}</a></div>
             
